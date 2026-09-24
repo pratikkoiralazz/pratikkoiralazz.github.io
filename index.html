@@ -66,7 +66,7 @@
 
   <footer>
     <div id="live-time">Loading local time...</div>
-    <div>Today's GitHub commits: <span id="commit-count" class="commit-stat">loading...</span></div>
+    <div>Today's GitHub commits: <span id="commit-count" class="commit-stat">0</span></div>
   </footer>
 
   <script>
@@ -88,7 +88,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Fetch Today's Live Commits via GitHub API with Local Timezone Matching
+    // Fetch Today's Live Commits via GitHub API
     async function fetchTodayCommits() {
       const username = 'pratikkoiralazz';
       const countElement = document.getElementById('commit-count');
@@ -109,20 +109,24 @@
 
         events.forEach(event => {
           if (event.type === 'PushEvent') {
-            // Convert UTC timestamp from GitHub to local date
             const eventDateObj = new Date(event.created_at);
             const eventLocalDate = eventDateObj.getFullYear() + '-' + 
               String(eventDateObj.getMonth() + 1).padStart(2, '0') + '-' + 
               String(eventDateObj.getDate()).padStart(2, '0');
 
             if (eventLocalDate === localToday) {
-              commitCount += event.payload.commits ? event.payload.commits.length : 0;
+              const commitsInPush = (event.payload && event.payload.commits) 
+                ? event.payload.commits.length 
+                : 1;
+                
+              commitCount += commitsInPush;
             }
           }
         });
 
         countElement.textContent = commitCount;
       } catch (error) {
+        console.error('Error fetching commits:', error);
         countElement.textContent = '0';
       }
     }
