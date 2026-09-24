@@ -5,72 +5,213 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pratik Koirala</title>
   <style>
+    :root {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --border: #f1f5f9;
+      --card-bg: #f8fafc;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0f17;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --accent: #38bdf8;
+        --border: #1e293b;
+        --card-bg: #0f172a;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #ffffff;
-      color: #0f172a;
-      max-width: 600px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      max-width: 580px;
       margin: 80px auto;
-      padding: 0 20px;
+      padding: 0 24px;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
+
+    header {
+      margin-bottom: 32px;
+    }
+
     h1 {
-      font-size: 2rem;
-      margin-bottom: 4px;
-      color: #0f172a;
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 6px;
     }
-    p {
-      color: #475569;
-      font-size: 1.1rem;
-      margin: 4px 0;
+
+    .bio {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 16px;
     }
+
+    /* Live availability status dot */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: var(--card-bg);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    .section {
+      margin-top: 40px;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      margin-bottom: 16px;
+    }
+
+    /* Low-key project list */
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-item a {
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .project-item a:hover {
+      color: var(--accent);
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* Clean nav links */
     .links {
-      margin-top: 24px;
+      display: flex;
+      gap: 16px;
     }
-    a {
-      color: #2563eb;
+
+    .links a {
+      color: var(--accent);
       text-decoration: none;
       font-weight: 500;
-      margin-right: 18px;
+      font-size: 0.95rem;
+      position: relative;
     }
-    a:hover {
-      text-decoration: underline;
+
+    .links a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--accent);
+      transform-origin: bottom right;
+      transition: transform 0.2s ease-out;
     }
+
+    .links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
     footer {
       margin-top: 60px;
-      padding-top: 20px;
-      border-top: 1px solid #e2e8f0;
-      font-size: 0.85rem;
-      color: #64748b;
-      font-family: monospace;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-    .commit-stat {
-      color: #0f172a;
-      font-weight: 600;
-    }
+
+  
   </style>
 </head>
 <body>
 
-  <h1>Pratik Koirala</h1>
-  <p>🌐 Full-stack web applications</p>
-  <p>🏛️ Civic-tech & transparency platforms</p>
+  <header>
+    <h1>Pratik Koirala</h1>
+    <p class="bio">Building full-stack web applications, civic tech tools, and AI workflows.</p>
+    <div class="status-badge">
+      <span class="status-dot"></span> Available for selective projects
+    </div>
+  </header>
 
-  <div class="links">
-    <a href="https://github.com/pratikkoiralazz" target="_blank">GitHub</a>
-    <a href="https://www.linkedin.com/in/pratikkoiralazz/" target="_blank">LinkedIn</a>
+  <div class="section">
+    <div class="section-title">Selected Focus</div>
+    <div class="project-list">
+      <div class="project-item">
+        <a href="https://github.com/pratikkoiralazz?tab=repositories" target="_blank">Civic Platforms</a>
+        <span class="project-desc">Transparency & reporting systems</span>
+      </div>
+      <div class="project-item">
+        <a href="https://github.com/pratikkoiralazz?tab=repositories" target="_blank">Web Engineering</a>
+        <span class="project-desc">PHP · MERN · PERN</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Connect</div>
+    <div class="links">
+      <a href="https://github.com/pratikkoiralazz" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/pratikkoiralazz/" target="_blank">LinkedIn</a>
+    </div>
   </div>
 
   <footer>
     <div id="live-time">Loading local time...</div>
-    <div>Today's GitHub commits: <span id="commit-count" class="commit-stat">0</span></div>
+   
   </footer>
 
   <script>
-    // Live Clock Function
+    // 1. Live Clock Function
     function updateClock() {
       const now = new Date();
       const options = { 
@@ -88,50 +229,6 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Fetch Today's Live Commits via GitHub API
-    async function fetchTodayCommits() {
-      const username = 'pratikkoiralazz';
-      const countElement = document.getElementById('commit-count');
-
-      try {
-        const response = await fetch(`https://api.github.com/users/${username}/events/public`);
-        if (!response.ok) throw new Error('API request failed');
-
-        const events = await response.json();
-        
-        // Get local date string formatted as YYYY-MM-DD
-        const now = new Date();
-        const localToday = now.getFullYear() + '-' + 
-          String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-          String(now.getDate()).padStart(2, '0');
-
-        let commitCount = 0;
-
-        events.forEach(event => {
-          if (event.type === 'PushEvent') {
-            const eventDateObj = new Date(event.created_at);
-            const eventLocalDate = eventDateObj.getFullYear() + '-' + 
-              String(eventDateObj.getMonth() + 1).padStart(2, '0') + '-' + 
-              String(eventDateObj.getDate()).padStart(2, '0');
-
-            if (eventLocalDate === localToday) {
-              const commitsInPush = (event.payload && event.payload.commits) 
-                ? event.payload.commits.length 
-                : 1;
-                
-              commitCount += commitsInPush;
-            }
-          }
-        });
-
-        countElement.textContent = commitCount;
-      } catch (error) {
-        console.error('Error fetching commits:', error);
-        countElement.textContent = '0';
-      }
-    }
-
-    fetchTodayCommits();
   </script>
 
 </body>
