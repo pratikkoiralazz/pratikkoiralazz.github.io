@@ -22,6 +22,7 @@
     p {
       color: #475569;
       font-size: 1.1rem;
+      margin: 4px 0;
     }
     .links {
       margin-top: 24px;
@@ -35,18 +36,89 @@
     a:hover {
       text-decoration: underline;
     }
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.85rem;
+      color: #64748b;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .commit-stat {
+      color: #0f172a;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
 
   <h1>Pratik Koirala</h1>
-  <p>🌐 Full-stack web applications </p>
-<p>🏛️ Civic-tech & transparency platforms</p>
+  <p>🌐 Full-stack web applications</p>
+  <p>🏛️ Civic-tech & transparency platforms</p>
 
   <div class="links">
     <a href="https://github.com/pratikkoiralazz" target="_blank">GitHub</a>
     <a href="https://www.linkedin.com/in/pratikkoiralazz/" target="_blank">LinkedIn</a>
   </div>
+
+  <footer>
+    <div id="live-time">Loading local time...</div>
+    <div>Today's GitHub commits: <span id="commit-count" class="commit-stat">loading...</span></div>
+  </footer>
+
+  <script>
+    // Live Clock Function
+    function updateClock() {
+      const now = new Date();
+      const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: true 
+      };
+      document.getElementById('live-time').textContent = now.toLocaleString('en-US', options);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Fetch Today's Live Commits via GitHub API
+    async function fetchTodayCommits() {
+      const username = 'pratikkoiralazz';
+      const countElement = document.getElementById('commit-count');
+
+      try {
+        const response = await fetch(`https://api.github.com/users/${username}/events/public`);
+        if (!response.ok) throw new Error('API request failed');
+
+        const events = await response.json();
+        const today = new Date().toISOString().split('T')[0];
+
+        let commitCount = 0;
+
+        events.forEach(event => {
+          if (event.type === 'PushEvent') {
+            const eventDate = event.created_at.split('T')[0];
+            if (eventDate === today) {
+              commitCount += event.payload.commits ? event.payload.commits.length : 0;
+            }
+          }
+        });
+
+        countElement.textContent = commitCount;
+      } catch (error) {
+        countElement.textContent = '0';
+      }
+    }
+
+    fetchTodayCommits();
+  </script>
 
 </body>
 </html>
