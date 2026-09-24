@@ -88,7 +88,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Fetch Today's Live Commits via GitHub API
+    // Fetch Today's Live Commits via GitHub API with Local Timezone Matching
     async function fetchTodayCommits() {
       const username = 'pratikkoiralazz';
       const countElement = document.getElementById('commit-count');
@@ -98,14 +98,24 @@
         if (!response.ok) throw new Error('API request failed');
 
         const events = await response.json();
-        const today = new Date().toISOString().split('T')[0];
+        
+        // Get local date string formatted as YYYY-MM-DD
+        const now = new Date();
+        const localToday = now.getFullYear() + '-' + 
+          String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+          String(now.getDate()).padStart(2, '0');
 
         let commitCount = 0;
 
         events.forEach(event => {
           if (event.type === 'PushEvent') {
-            const eventDate = event.created_at.split('T')[0];
-            if (eventDate === today) {
+            // Convert UTC timestamp from GitHub to local date
+            const eventDateObj = new Date(event.created_at);
+            const eventLocalDate = eventDateObj.getFullYear() + '-' + 
+              String(eventDateObj.getMonth() + 1).padStart(2, '0') + '-' + 
+              String(eventDateObj.getDate()).padStart(2, '0');
+
+            if (eventLocalDate === localToday) {
               commitCount += event.payload.commits ? event.payload.commits.length : 0;
             }
           }
