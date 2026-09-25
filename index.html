@@ -4,8 +4,375 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pratik Koirala</title>
-   <link rel="stylesheet" href="style.css">
-  
+  <style>
+    :root {
+      --bg: #090d16;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --muted-dark: #64748b;
+      --accent: #00a3ff;
+      --border: #131b2e;
+      --badge-bg: #0d1526;
+      --badge-border: #1e293b;
+      --correct: #22c55e;
+      --incorrect: #ef4444;
+      --subtle: #334155;
+      --yellow: #eab308;
+    }
+
+    [data-theme="white"] {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --muted-dark: #94a3b8;
+      --accent: #2563eb;
+      --border: #e2e8f0;
+      --badge-bg: #f8fafc;
+      --badge-border: #cbd5e1;
+    }
+
+    [data-theme="solarized"] {
+      --bg: #fdf6e3;
+      --text: #657b83;
+      --muted: #93a1a1;
+      --muted-dark: #b58900;
+      --accent: #d33682;
+      --border: #eee8d5;
+      --badge-bg: #f5eef0;
+      --badge-border: #cb4b16;
+    }
+
+    [data-theme="oled"] {
+      --bg: #000000;
+      --text: #ffffff;
+      --muted: #94a3b8;
+      --muted-dark: #475569;
+      --accent: #38bdf8;
+      --border: #1e293b;
+      --badge-bg: #111827;
+      --badge-border: #1f2937;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 0 24px;
+      line-height: 1.6;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header { margin-bottom: 32px; }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .bio {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #38bdf8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: var(--badge-bg);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      border: 1px solid var(--badge-border);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    .btn-action {
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      color: var(--muted);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .btn-action:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .game-box {
+      display: none;
+      background: var(--badge-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Terminal Snake Game */
+    #snake-board {
+      background: #000;
+      border: 1px solid var(--border);
+      display: block;
+      margin: 12px auto;
+      border-radius: 6px;
+    }
+
+    /* Code Bug Hunter */
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    .code-line {
+      cursor: pointer;
+      padding: 2px 8px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .code-line:hover { background: rgba(255, 255, 255, 0.05); }
+
+    /* Monkeytype Mode */
+    .typing-config {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+      padding: 6px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      color: var(--muted-dark);
+    }
+
+    .config-group { display: flex; gap: 12px; }
+    .config-opt { cursor: pointer; transition: color 0.15s; }
+    .config-opt.active { color: var(--yellow); font-weight: 600; }
+    .timer-display { font-size: 1rem; color: var(--yellow); font-weight: 600; }
+
+    .typing-words-wrapper {
+      position: relative;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      height: 90px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      user-select: none;
+    }
+
+    .word { display: inline-block; margin-right: 12px; color: var(--subtle); }
+    .char { position: relative; transition: color 0.05s; }
+    .char.correct { color: var(--text); }
+    .char.incorrect { color: var(--incorrect); }
+
+    .caret {
+      position: absolute;
+      width: 2px;
+      height: 1.2em;
+      background: var(--yellow);
+      animation: blink 1s infinite;
+      transition: left 0.05s, top 0.05s;
+      display: none;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .typing-hidden-input { position: absolute; opacity: 0; pointer-events: none; }
+
+    .results-card {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 10px;
+    }
+
+    .stat-block { display: flex; flex-direction: column; }
+    .stat-block .lbl { font-size: 1.1rem; color: var(--muted-dark); letter-spacing: 0.05em; }
+    .stat-block .val { font-size: 3.2rem; font-weight: 700; color: var(--yellow); line-height: 1.1; }
+
+    .restart-btn {
+      display: block;
+      margin: 16px auto 0 auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--yellow);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* System Drawer */
+    .drawer {
+      display: none;
+      background: var(--badge-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .drawer-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+
+    .section { margin-top: 40px; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted-dark);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .tag-filters { display: flex; gap: 6px; }
+    .tag-btn {
+      background: none;
+      border: none;
+      color: var(--muted-dark);
+      font-size: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      cursor: pointer;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .tag-btn.active { color: var(--accent); background: var(--badge-bg); }
+
+    .project-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .project-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-item a { font-weight: 600; color: var(--text); text-decoration: none; font-size: 1.05rem; }
+    .project-desc { font-size: 0.9rem; color: var(--muted-dark); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+    .links { display: flex; gap: 18px; }
+    .links a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 1rem; }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted-dark);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Command Palette Modal Overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 120px;
+    }
+
+    .modal {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      width: 90%;
+      max-width: 480px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .modal-list { list-style: none; max-height: 280px; overflow-y: auto; }
+    .modal-item {
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-item:hover { background: var(--badge-bg); color: var(--accent); }
+
+    #matrix-canvas {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.85;
+    }
+  </style>
 </head>
 <body>
 
@@ -24,12 +391,58 @@
       <button class="btn-action" onclick="cycleTheme()">🎨 Theme [T]</button>
     </div>
 
-    <!-- System Status Drawer -->
+    <!-- System Drawer -->
     <div id="system-drawer" class="drawer">
       <div class="drawer-row"><span>Stack:</span><span>PHP · MERN · PERN</span></div>
-      <div class="drawer-row"><span>Editor:</span><span>VS Code</span></div>
+      <div class="drawer-row"><span>Editor:</span><span>VS Code (Tokyo Night)</span></div>
       <div class="drawer-row"><span>Location:</span><span>Biratnagar, Nepal</span></div>
       <div class="drawer-row"><span>Secret:</span><span>Try typing Konami Code ↑↑↓↓←→←→BA</span></div>
+    </div>
+
+    <!-- Terminal Snake Game -->
+    <div id="box-snake" class="game-box">
+      <div style="display:flex; justify-content:space-between; color:var(--muted); font-size:0.85rem; margin-bottom:8px;">
+        <span>Debug Bugs: 🐛</span>
+        <span>Score: <strong id="snake-score" style="color:var(--accent);">0</strong> | High: <strong id="snake-high" style="color:var(--correct);">0</strong></span>
+      </div>
+      <canvas id="snake-board" width="300" height="200"></canvas>
+    </div>
+
+    <!-- Code Bug Hunter -->
+    <div id="box-bug" class="game-box">
+      <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+        <span>Find the bug line</span>
+        <span>Streak: <strong id="bug-streak" style="color:var(--correct);">0</strong></span>
+      </div>
+      <div id="bug-code-block" class="code-block"></div>
+      <div id="bug-feedback" style="font-size:0.8rem; color:var(--muted); text-align:center;">Click on the buggy line</div>
+    </div>
+
+    <!-- Monkeytype Mode Engine -->
+    <div id="box-typing" class="game-box" onclick="focusEngine()">
+      <div id="config-bar" class="typing-config">
+        <div class="config-group">
+          <span class="config-opt active" onclick="setTypingMode(15, this)">15s</span>
+          <span class="config-opt" onclick="setTypingMode(30, this)">30s</span>
+          <span class="config-opt" onclick="setTypingMode(60, this)">60s</span>
+        </div>
+        <div id="timer-val" class="timer-display">15</div>
+      </div>
+
+      <input type="text" id="engine-input" class="typing-hidden-input" autocomplete="off" oninput="handleEngineInput(event)">
+      
+      <div id="words-container" class="typing-words-wrapper">
+        <div id="caret" class="caret"></div>
+        <div id="words-inner"></div>
+      </div>
+
+      <div id="results-card" class="results-card">
+        <div class="stat-block"><span class="lbl">wpm</span><span id="res-wpm" class="val">0</span></div>
+        <div class="stat-block"><span class="lbl">acc</span><span id="res-acc" class="val">0%</span></div>
+        <div class="stat-block"><span class="lbl">test type</span><div id="res-type" style="color:var(--yellow); font-size:0.9rem; margin-top:8px;">time 15<br>english</div></div>
+      </div>
+
+      <button class="restart-btn" onclick="resetEngine(); event.stopPropagation();">↻ Restart Test</button>
     </div>
   </header>
 
@@ -60,20 +473,6 @@
     </div>
   </div>
 
-  <!-- Interactive Code Playground -->
-  <div class="section">
-    <div class="section-title">INTERACTIVE PLAYGROUND</div>
-    <div class="playground">
-      <textarea id="code-input" spellcheck="false">// Try running some JS:
-const stack = ['PHP', 'MERN', 'PERN'];
-return `Stack includes ${stack.length} core frameworks.`;</textarea>
-      <div class="playground-bar">
-        <button class="btn-action" onclick="runCode()">Run Snippet ▶</button>
-        <div id="code-output" class="playground-output">Result will appear here</div>
-      </div>
-    </div>
-  </div>
-
   <div class="section">
     <div class="section-title">CONNECT</div>
     <div class="links">
@@ -84,24 +483,491 @@ return `Stack includes ${stack.length} core frameworks.`;</textarea>
 
   <footer>
     <div id="live-time">Loading local time...</div>
-    <div>Today's GitHub commits: <span id="commit-count" class="commit-stat">0</span></div>
+    <div>Today's GitHub commits: <span id="commit-count" style="color:var(--text); font-weight:600;">0</span></div>
   </footer>
 
   <!-- Command Palette Modal -->
   <div id="palette-modal" class="modal-overlay" onclick="closePalette(event)">
     <div class="modal" onclick="event.stopPropagation()">
-      <input type="text" id="palette-search" class="modal-input" placeholder="Type a command or search..." oninput="searchPalette()">
+      <input type="text" id="palette-search" class="modal-input" placeholder="Type a command or search games..." oninput="searchPalette()">
       <ul id="palette-results" class="modal-list">
-        <li class="modal-item" onclick="execCmd('github')"><span>Go to GitHub</span><span style="opacity:0.5">Link</span></li>
-        <li class="modal-item" onclick="execCmd('linkedin')"><span>Go to LinkedIn</span><span style="opacity:0.5">Link</span></li>
+        <li class="modal-item" onclick="execCmd('game-snake')"><span>🎮 Play Terminal Snake</span><span style="opacity:0.5">Mini Game</span></li>
+        <li class="modal-item" onclick="execCmd('game-bug')"><span>🐛 Play Code Bug Hunter</span><span style="opacity:0.5">Mini Game</span></li>
+        <li class="modal-item" onclick="execCmd('game-typing')"><span>⚡ Play Monkeytype Test</span><span style="opacity:0.5">Speed Test</span></li>
+        <li class="modal-item" onclick="execCmd('github')"><span>Go to GitHub Profile</span><span style="opacity:0.5">Link</span></li>
+        <li class="modal-item" onclick="execCmd('linkedin')"><span>Go to LinkedIn Profile</span><span style="opacity:0.5">Link</span></li>
         <li class="modal-item" onclick="execCmd('theme')"><span>Switch Color Theme</span><span style="opacity:0.5">Toggle</span></li>
         <li class="modal-item" onclick="execCmd('drawer')"><span>Toggle System Status</span><span style="opacity:0.5">Drawer</span></li>
-        <li class="modal-item" onclick="execCmd('matrix')"><span>Trigger Matrix Mode</span><span style="opacity:0.5">Easter Egg</span></li>
+        <li class="modal-item" onclick="execCmd('matrix')"><span>Trigger Matrix Rain</span><span style="opacity:0.5">Easter Egg</span></li>
       </ul>
     </div>
   </div>
 
-  <script src="index.js"></script>
+  <script>
+    // 1. Live Clock
+    function updateClock() {
+      document.getElementById('live-time').textContent = new Date().toLocaleString('en-US', {
+        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+      });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 2. Fetch Live GitHub Commits
+    async function fetchTodayCommits() {
+      const countElement = document.getElementById('commit-count');
+      try {
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`https://api.github.com/users/pratikkoiralazz/events/public?t=${cacheBuster}`);
+        if (!response.ok) return;
+        const events = await response.json();
+        const startOfToday = new Date(new Date().setHours(0,0,0,0)).getTime();
+        let total = 0;
+        events.forEach(event => {
+          if (event.type === 'PushEvent' && new Date(event.created_at).getTime() >= startOfToday) {
+            total += (event.payload && event.payload.commits) ? event.payload.commits.length : 1;
+          }
+        });
+        countElement.textContent = total;
+      } catch (err) {}
+    }
+    fetchTodayCommits();
+
+    // Widget Navigation Manager
+    function showWidget(id) {
+      ['box-snake', 'box-bug', 'box-typing'].forEach(boxId => {
+        const box = document.getElementById(boxId);
+        if (boxId === id) {
+          box.style.display = box.style.display === 'block' ? 'none' : 'block';
+          if (box.style.display === 'block') {
+            if (id === 'box-snake') startSnakeGame();
+            if (id === 'box-bug') loadBugChallenge();
+            if (id === 'box-typing') resetEngine();
+          } else {
+            if (id === 'box-snake') clearInterval(snakeInterval);
+          }
+        } else {
+          box.style.display = 'none';
+          if (boxId === 'box-snake') clearInterval(snakeInterval);
+        }
+      });
+    }
+
+    // System Drawer & Theme Switcher
+    function toggleDrawer() {
+      const drawer = document.getElementById('system-drawer');
+      drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
+    }
+
+    const themes = ['default', 'white', 'solarized', 'oled'];
+    let currentThemeIndex = 0;
+    function cycleTheme() {
+      currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+      const theme = themes[currentThemeIndex];
+      if (theme === 'default') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 't' && document.activeElement.tagName !== 'INPUT') {
+        cycleTheme();
+      }
+    });
+
+    // Tag Filtering
+    function filterProjects(tag, btn) {
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.project-item').forEach(item => {
+        item.style.display = (tag === 'all' || item.getAttribute('data-tag') === tag) ? 'flex' : 'none';
+      });
+    }
+
+    /* =========================================================
+       TERMINAL ASCII SNAKE LOGIC
+       ========================================================= */
+    let snakeInterval = null;
+    let snake = [{x: 150, y: 100}];
+    let snakeDir = {x: 10, y: 0};
+    let bugFood = {x: 50, y: 50};
+    let snakeScore = 0;
+    let snakeHighScore = localStorage.getItem('snakeHighScore') || 0;
+    document.getElementById('snake-high').textContent = snakeHighScore;
+
+    function startSnakeGame() {
+      resetSnakeGame();
+      clearInterval(snakeInterval);
+      snakeInterval = setInterval(snakeGameLoop, 90);
+    }
+
+    function resetSnakeGame() {
+      snake = [{x: 150, y: 100}, {x: 140, y: 100}];
+      snakeDir = {x: 10, y: 0};
+      snakeScore = 0;
+      document.getElementById('snake-score').textContent = snakeScore;
+      spawnBug();
+    }
+
+    function spawnBug() {
+      bugFood.x = Math.floor(Math.random() * 29) * 10;
+      bugFood.y = Math.floor(Math.random() * 19) * 10;
+    }
+
+    function snakeGameLoop() {
+      const canvas = document.getElementById('snake-board');
+      const ctx = canvas.getContext('2d');
+
+      const head = {x: snake[0].x + snakeDir.x, y: snake[0].y + snakeDir.y};
+
+      if (head.x < 0 || head.x >= 300 || head.y < 0 || head.y >= 200 || snake.some(p => p.x === head.x && p.y === head.y)) {
+        if (snakeScore > snakeHighScore) {
+          snakeHighScore = snakeScore;
+          localStorage.setItem('snakeHighScore', snakeHighScore);
+          document.getElementById('snake-high').textContent = snakeHighScore;
+        }
+        resetSnakeGame();
+        return;
+      }
+
+      snake.unshift(head);
+
+      if (head.x === bugFood.x && head.y === bugFood.y) {
+        snakeScore += 10;
+        document.getElementById('snake-score').textContent = snakeScore;
+        spawnBug();
+      } else {
+        snake.pop();
+      }
+
+      ctx.fillStyle = '#050a0e';
+      ctx.fillRect(0, 0, 300, 200);
+
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(bugFood.x + 1, bugFood.y + 1, 8, 8);
+
+      snake.forEach((part, index) => {
+        ctx.fillStyle = index === 0 ? '#22c55e' : '#00a3ff';
+        ctx.fillRect(part.x + 1, part.y + 1, 8, 8);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('box-snake').style.display === 'block') {
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+          e.preventDefault();
+        }
+        if (e.key === 'ArrowUp' && snakeDir.y === 0) snakeDir = {x: 0, y: -10};
+        if (e.key === 'ArrowDown' && snakeDir.y === 0) snakeDir = {x: 0, y: 10};
+        if (e.key === 'ArrowLeft' && snakeDir.x === 0) snakeDir = {x: -10, y: 0};
+        if (e.key === 'ArrowRight' && snakeDir.x === 0) snakeDir = {x: 10, y: 0};
+      }
+    });
+
+    /* =========================================================
+       CODE BUG HUNTER LOGIC
+       ========================================================= */
+    const bugChallenges = [
+      {
+        code: [
+          "async function fetchUser(id) {",
+          "  const res = fetch(`/api/users/${id}`);",
+          "  const data = await res.json();",
+          "  return data.name;",
+          "}"
+        ],
+        bugLine: 1,
+        reason: "Missing 'await' keyword on fetch promise call."
+      },
+      {
+        code: [
+          "function calculateAverage(nums) {",
+          "  let sum = 0;",
+          "  for (let i = 0; i <= nums.length; i++) {",
+          "    sum += nums[i];",
+          "  }",
+          "  return sum / nums.length;",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "Off-by-one array boundary error (i <= nums.length causes NaN)."
+      }
+    ];
+
+    let currentBugIndex = 0;
+    let bugStreak = 0;
+
+    function loadBugChallenge() {
+      const challenge = bugChallenges[currentBugIndex];
+      const blockEl = document.getElementById('bug-code-block');
+      blockEl.innerHTML = challenge.code.map((line, idx) => `
+        <div class="code-line" onclick="checkBugLine(${idx})">${idx + 1}. ${line}</div>
+      `).join('');
+      document.getElementById('bug-feedback').textContent = "Click on the line containing the bug";
+    }
+
+    function checkBugLine(idx) {
+      const challenge = bugChallenges[currentBugIndex];
+      const feedback = document.getElementById('bug-feedback');
+      if (idx === challenge.bugLine) {
+        bugStreak++;
+        feedback.textContent = `Correct! ${challenge.reason}`;
+        feedback.style.color = "var(--correct)";
+        document.getElementById('bug-streak').textContent = bugStreak;
+        setTimeout(() => {
+          currentBugIndex = (currentBugIndex + 1) % bugChallenges.length;
+          loadBugChallenge();
+        }, 1500);
+      } else {
+        bugStreak = 0;
+        document.getElementById('bug-streak').textContent = 0;
+        feedback.textContent = "Wrong line! Look closely for syntax/async issues.";
+        feedback.style.color = "var(--incorrect)";
+      }
+    }
+
+    /* =========================================================
+       MONKEYTYPE MODE ENGINE LOGIC
+       ========================================================= */
+    const devDict = ['react', 'nextjs', 'postgres', 'express', 'node', 'civic', 'pipeline', 'async', 'await', 'git', 'push', 'commit', 'deploy', 'rest', 'api', 'schema', 'query', 'function'];
+    let timeLimit = 15;
+    let timeRemaining = 15;
+    let words = [];
+    let activeWordIndex = 0;
+    let typedHistory = [];
+    let testActive = false;
+    let testFinished = false;
+    let timerInterval = null;
+
+    function setTypingMode(val, el) {
+      timeLimit = val;
+      timeRemaining = val;
+      document.querySelectorAll('.config-opt').forEach(opt => opt.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('timer-val').textContent = val;
+      resetEngine();
+    }
+
+    function focusEngine() {
+      if (!testFinished) document.getElementById('engine-input').focus();
+    }
+
+    function appendWords(count = 30) {
+      const newBatch = Array.from({length: count}, () => devDict[Math.floor(Math.random() * devDict.length)]);
+      const startIndex = words.length;
+      words.push(...newBatch);
+      const wordsInner = document.getElementById('words-inner');
+      const batchHTML = newBatch.map((w, i) => {
+        const wi = startIndex + i;
+        return `<div class="word" id="w-${wi}">${w.split('').map((c, ci) => `<span class="char" id="c-${wi}-${ci}">${c}</span>`).join('')}</div>`;
+      }).join('');
+      wordsInner.insertAdjacentHTML('beforeend', batchHTML);
+    }
+
+    function resetEngine() {
+      clearInterval(timerInterval);
+      testActive = false;
+      testFinished = false;
+      activeWordIndex = 0;
+      typedHistory = [];
+      timeRemaining = timeLimit;
+
+      document.getElementById('timer-val').textContent = timeLimit;
+      document.getElementById('results-card').style.display = 'none';
+      document.getElementById('words-container').style.display = 'block';
+      document.getElementById('config-bar').style.display = 'flex';
+      document.getElementById('engine-input').value = '';
+
+      words = [];
+      document.getElementById('words-inner').innerHTML = '';
+      appendWords(40);
+      document.getElementById('caret').style.display = 'block';
+      focusEngine();
+      updateCaret();
+    }
+
+    function handleEngineInput(e) {
+      if (testFinished) return;
+      const input = e.target.value;
+      const currentWord = words[activeWordIndex];
+
+      if (!testActive && input.length > 0) {
+        testActive = true;
+        timerInterval = setInterval(() => {
+          timeRemaining--;
+          document.getElementById('timer-val').textContent = timeRemaining;
+          if (timeRemaining <= 0) finishEngine();
+        }, 1000);
+      }
+
+      if (e.data === ' ') {
+        if (input.trim().length > 0) {
+          typedHistory[activeWordIndex] = input.trim();
+          activeWordIndex++;
+          e.target.value = '';
+          if (activeWordIndex + 15 >= words.length) appendWords(30);
+        }
+      } else {
+        typedHistory[activeWordIndex] = input;
+        const wordEl = document.getElementById(`w-${activeWordIndex}`);
+        if (wordEl) {
+          const charSpans = wordEl.querySelectorAll('.char');
+          charSpans.forEach((span, i) => {
+            if (i < input.length) {
+              span.className = (input[i] === currentWord[i]) ? 'char correct' : 'char incorrect';
+            } else {
+              span.className = 'char';
+            }
+          });
+        }
+      }
+      updateCaret();
+    }
+
+    function updateCaret() {
+      const activeWordEl = document.getElementById(`w-${activeWordIndex}`);
+      if (!activeWordEl) return;
+      const inputVal = document.getElementById('engine-input').value;
+      const charEl = activeWordEl.querySelectorAll('.char')[inputVal.length];
+      const caret = document.getElementById('caret');
+
+      if (charEl) {
+        caret.style.left = `${charEl.offsetLeft}px`;
+        caret.style.top = `${charEl.offsetTop}px`;
+      } else {
+        const lastChar = activeWordEl.lastElementChild;
+        if (lastChar) {
+          caret.style.left = `${lastChar.offsetLeft + lastChar.offsetWidth}px`;
+          caret.style.top = `${lastChar.offsetTop}px`;
+        }
+      }
+    }
+
+    function finishEngine() {
+      clearInterval(timerInterval);
+      testFinished = true;
+      testActive = false;
+
+      const currentVal = document.getElementById('engine-input').value.trim();
+      if (currentVal.length > 0) typedHistory[activeWordIndex] = currentVal;
+
+      let totalTypedChars = 0;
+      let correctChars = 0;
+
+      typedHistory.forEach((typed, idx) => {
+        const target = words[idx];
+        if (!typed || !target) return;
+        totalTypedChars += typed.length + 1;
+        for (let i = 0; i < typed.length; i++) {
+          if (i < target.length && typed[i] === target[i]) correctChars++;
+        }
+        if (typed === target) correctChars++;
+      });
+
+      const elapsedMinutes = timeLimit / 60;
+      const wpm = Math.round((correctChars / 5) / elapsedMinutes) || 0;
+      const accuracy = totalTypedChars > 0 ? Math.min(100, Math.round((correctChars / totalTypedChars) * 100)) : 100;
+
+      document.getElementById('caret').style.display = 'none';
+      document.getElementById('words-container').style.display = 'none';
+      document.getElementById('config-bar').style.display = 'none';
+      
+      document.getElementById('res-wpm').textContent = wpm;
+      document.getElementById('res-acc').textContent = `${accuracy}%`;
+      document.getElementById('res-type').innerHTML = `time ${timeLimit}<br>english`;
+      document.getElementById('results-card').style.display = 'flex';
+    }
+
+    /* Command Palette Modal Manager */
+    function openPalette() {
+      document.getElementById('palette-modal').style.display = 'flex';
+      document.getElementById('palette-search').value = '';
+      document.getElementById('palette-search').focus();
+      searchPalette();
+    }
+
+    function closePalette(e) {
+      document.getElementById('palette-modal').style.display = 'none';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openPalette();
+      } else if (e.key === 'Escape') {
+        closePalette();
+      }
+    });
+
+    function searchPalette() {
+      const query = document.getElementById('palette-search').value.toLowerCase();
+      document.querySelectorAll('.modal-item').forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(query) ? 'flex' : 'none';
+      });
+    }
+
+    function execCmd(action) {
+      closePalette();
+      if (action === 'game-snake') showWidget('box-snake');
+      if (action === 'game-bug') showWidget('box-bug');
+      if (action === 'game-typing') showWidget('box-typing');
+      if (action === 'github') window.open('https://github.com/pratikkoiralazz', '_blank');
+      if (action === 'linkedin') window.open('https://www.linkedin.com/in/pratikkoiralazz/', '_blank');
+      if (action === 'theme') cycleTheme();
+      if (action === 'drawer') toggleDrawer();
+      if (action === 'matrix') triggerMatrix();
+    }
+
+    /* Konami Code Matrix Rain Easter Egg */
+    const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konamiCode[konamiIndex] || e.key.toLowerCase() === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          triggerMatrix();
+          konamiIndex = 0;
+        }
+      } else {
+        konamiIndex = 0;
+      }
+    });
+
+    function triggerMatrix() {
+      const canvas = document.getElementById('matrix-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.style.display = 'block';
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const binaryTokens = ['1', '0', '00', '11', '01', '10'];
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+      const drops = Array(Math.floor(columns)).fill(1);
+
+      function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#22c55e';
+        ctx.font = fontSize + 'px ui-monospace, SFMono-Regular, monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = binaryTokens[Math.floor(Math.random() * binaryTokens.length)];
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+
+      const interval = setInterval(draw, 33);
+      setTimeout(() => {
+        clearInterval(interval);
+        canvas.style.display = 'none';
+      }, 5000);
+    }
+  </script>
+<script src="index.js"></script>
 
 </body>
 </html>
