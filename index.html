@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pratik Koirala</title>
-<link rel="stylesheet" href="style.css">
-
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -34,7 +33,7 @@
 
     <!-- Terminal Snake Game -->
     <div id="box-snake" class="game-box">
-      <div style="display:flex; justify-content:space-between; color:var(--muted); font-size:0.85rem; margin-bottom:8px;">
+      <div class="game-header">
         <span>Debug Bugs: 🐛</span>
         <span>Score: <strong id="snake-score" style="color:var(--accent);">0</strong> | High: <strong id="snake-high" style="color:var(--correct);">0</strong></span>
       </div>
@@ -43,12 +42,12 @@
 
     <!-- Code Bug Hunter -->
     <div id="box-bug" class="game-box">
-      <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+      <div class="game-header">
         <span>Find the bug line</span>
         <span>Streak: <strong id="bug-streak" style="color:var(--correct);">0</strong></span>
       </div>
       <div id="bug-code-block" class="code-block"></div>
-      <div id="bug-feedback" style="font-size:0.8rem; color:var(--muted); text-align:center;">Click on the buggy line</div>
+      <div id="bug-feedback" class="game-feedback">Click on the buggy line</div>
     </div>
 
     <!-- Monkeytype Mode Engine -->
@@ -72,7 +71,7 @@
       <div id="results-card" class="results-card">
         <div class="stat-block"><span class="lbl">wpm</span><span id="res-wpm" class="val">0</span></div>
         <div class="stat-block"><span class="lbl">acc</span><span id="res-acc" class="val">0%</span></div>
-        <div class="stat-block"><span class="lbl">test type</span><div id="res-type" style="color:var(--yellow); font-size:0.9rem; margin-top:8px;">time 15<br>english</div></div>
+        <div class="stat-block"><span class="lbl">test type</span><div id="res-type" class="res-type-text">time 15<br>english</div></div>
       </div>
 
       <button class="restart-btn" onclick="resetEngine(); event.stopPropagation();">↻ Restart Test</button>
@@ -124,19 +123,18 @@
     <div class="modal" onclick="event.stopPropagation()">
       <input type="text" id="palette-search" class="modal-input" placeholder="Type a command or search games..." oninput="searchPalette()">
       <ul id="palette-results" class="modal-list">
-        <li class="modal-item" onclick="execCmd('game-snake')"><span>🎮 Play Terminal Snake</span><span style="opacity:0.5">Mini Game</span></li>
-        <li class="modal-item" onclick="execCmd('game-bug')"><span>🐛 Play Code Bug Hunter</span><span style="opacity:0.5">Mini Game</span></li>
-        <li class="modal-item" onclick="execCmd('game-typing')"><span>⚡ Play Monkeytype Test</span><span style="opacity:0.5">Speed Test</span></li>
-        <li class="modal-item" onclick="execCmd('github')"><span>Go to GitHub Profile</span><span style="opacity:0.5">Link</span></li>
-        <li class="modal-item" onclick="execCmd('linkedin')"><span>Go to LinkedIn Profile</span><span style="opacity:0.5">Link</span></li>
-        <li class="modal-item" onclick="execCmd('theme')"><span>Switch Color Theme</span><span style="opacity:0.5">Toggle</span></li>
-        <li class="modal-item" onclick="execCmd('drawer')"><span>Toggle System Status</span><span style="opacity:0.5">Drawer</span></li>
-        <li class="modal-item" onclick="execCmd('matrix')"><span>Trigger Matrix Rain</span><span style="opacity:0.5">Easter Egg</span></li>
+        <li class="modal-item" onclick="execCmd('game-snake')"><span>🎮 Play Terminal Snake</span><span class="modal-badge">Mini Game</span></li>
+        <li class="modal-item" onclick="execCmd('game-bug')"><span>🐛 Play Code Bug Hunter</span><span class="modal-badge">Mini Game</span></li>
+        <li class="modal-item" onclick="execCmd('game-typing')"><span>⚡ Play Monkeytype Test</span><span class="modal-badge">Speed Test</span></li>
+        <li class="modal-item" onclick="execCmd('github')"><span>Go to GitHub Profile</span><span class="modal-badge">Link</span></li>
+        <li class="modal-item" onclick="execCmd('linkedin')"><span>Go to LinkedIn Profile</span><span class="modal-badge">Link</span></li>
+        <li class="modal-item" onclick="execCmd('theme')"><span>Switch Color Theme</span><span class="modal-badge">Toggle</span></li>
+        <li class="modal-item" onclick="execCmd('drawer')"><span>Toggle System Status</span><span class="modal-badge">Drawer</span></li>
+        <li class="modal-item" onclick="execCmd('matrix')"><span>Trigger Matrix Rain</span><span class="modal-badge">Easter Egg</span></li>
       </ul>
     </div>
   </div>
 
-<script src="index.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
