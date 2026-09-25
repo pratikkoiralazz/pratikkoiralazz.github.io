@@ -24,12 +24,15 @@
     </div>
 
     <!-- System Drawer -->
-    <div id="system-drawer" class="drawer">
-      <div class="drawer-row"><span>Stack:</span><span>PHP · MERN · PERN</span></div>
-      <div class="drawer-row"><span>Editor:</span><span>VS Code (Tokyo Night)</span></div>
-      <div class="drawer-row"><span>Location:</span><span>Biratnagar, Nepal</span></div>
-      <div class="drawer-row"><span>Secret:</span><span>Try typing Konami Code ↑↑↓↓←→←→BA</span></div>
-    </div>
+   <div id="system-drawer" style="display: none; background: #0d1526; border: 1px solid #131b2e; border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 0.85rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">
+  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Stack:</span><span>PHP · MERN · PERN</span></div>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Editor:</span><span>VS Code </span></div>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Location:</span><span>Biratnagar, Nepal</span></div>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Secret:</span><span>Try typing Konami Code ↑↑↓↓←→←→BA</span></div>
+  <div style="margin-top: 12px; padding-top: 8px; border-top: 1px dashed #131b2e; display: flex; justify-content: flex-end;">
+    <a href="#" style="color: #64748b; text-decoration: none; font-size: 0.8rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'" onclick="event.preventDefault(); document.getElementById('system-drawer').style.display = 'none';">✕ Exit</a>
+  </div>
+</div>
 
     <!-- Terminal Snake Game -->
     <div id="box-snake" class="game-box">
