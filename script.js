@@ -10,7 +10,7 @@
         file: 'civic-tech-impact.md',
         title: 'Building Civic Tech for Local Impact',
         desc: 'Lessons from RateMyPalika & Report2Clean',
-        date: 'Sep 2026',
+        date: '26th Sep 2026',
         tag: 'civic'
       },
       {
