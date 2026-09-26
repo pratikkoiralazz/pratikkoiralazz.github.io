@@ -12,13 +12,6 @@
         desc: 'Lessons from RateMyPalika & Report2Clean',
         date: '26th Sep 2026',
         tag: 'civic'
-      },
-      {
-        file: 'bytecafe-update.md',
-        title: 'Building ByteCafe’s Menu Engine',
-        desc: 'Optimizing load times on 3G mobile networks',
-        date: 'Sep 2026',
-        tag: 'tech'
       }
     ];
 
