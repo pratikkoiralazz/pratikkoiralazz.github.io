@@ -61,14 +61,24 @@
       </div>
 
       <!-- Code Bug Hunter -->
-      <div id="box-bug" class="game-box">
-        <div class="game-header">
-          <span>Find the bug line</span>
-          <span>Streak: <strong id="bug-streak" style="color:var(--correct);">0</strong></span>
-        </div>
-        <div id="bug-code-block" class="code-block"></div>
-        <div id="bug-feedback" class="game-feedback">Click on the buggy line</div>
-      </div>
+     <div id="box-bug" class="game-box">
+  <div class="game-header">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span>Find the bug line</span>
+      <select id="bug-lang-select" onchange="updateBugLanguagePreference()" style="background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; font-family: inherit; cursor: pointer;">
+        <option value="all">All Languages</option>
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="php">PHP</option>
+        <option value="sql">SQL</option>
+        <option value="off">Turn Off Game</option>
+      </select>
+    </div>
+    <span>Streak: <strong id="bug-streak" style="color:var(--correct);">0</strong></span>
+  </div>
+  <div id="bug-code-block" class="code-block"></div>
+  <div id="bug-feedback" class="game-feedback">Click on the buggy line</div>
+</div>
 
       <!-- Monkeytype Mode Engine -->
       <div id="box-typing" class="game-box" onclick="focusEngine()">

@@ -289,7 +289,9 @@
 
     /* CODE BUG HUNTER LOGIC */
     const bugChallenges = [
+      // --- JAVASCRIPT (10) ---
       {
+        lang: 'javascript',
         code: [
           "async function fetchUser(id) {",
           "  const res = fetch(`/api/users/${id}`);",
@@ -301,6 +303,7 @@
         reason: "Missing 'await' keyword on fetch promise call."
       },
       {
+        lang: 'javascript',
         code: [
           "function calculateAverage(nums) {",
           "  let sum = 0;",
@@ -312,24 +315,479 @@
         ],
         bugLine: 2,
         reason: "Off-by-one array boundary error (i <= nums.length causes NaN)."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function updatePrice(price, tax) {",
+          "  const total = price + tax;",
+          "  total = total * 0.9;",
+          "  return total;",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "Attempting to reassign a const variable."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function getFirstElement(arr) {",
+          "  if (arr.length = 0) {",
+          "    return null;",
+          "  }",
+          "  return arr[0];",
+          "}"
+        ],
+        bugLine: 1,
+        reason: "Assignment (=) used inside condition instead of comparison (===)."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function formatName(user) {",
+          "  Object.freeze(user);",
+          "  user.name = user.name.toUpperCase();",
+          "  return user.name;",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "Cannot modify property of a frozen object."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function processItems(items) {",
+          "  items.forEach(async (item) => {",
+          "    await saveToDB(item);",
+          "  });",
+          "  console.log('Complete');",
+          "}"
+        ],
+        bugLine: 1,
+        reason: "Array.prototype.forEach does not wait for async promises."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function incrementCounter(val) {",
+          "  let count = '10';",
+          "  count += val;",
+          "  return count;",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "String concatenation occurs instead of numeric addition."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function getEvens(nums) {",
+          "  return nums.map(n => {",
+          "    n % 2 === 0;",
+          "  });",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "Missing return statement inside block body arrow function."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function createGreeting(name) {",
+          "  return",
+          "    'Hello ' + name;",
+          "}"
+        ],
+        bugLine: 1,
+        reason: "Automatic Semicolon Insertion (ASI) returns undefined."
+      },
+      {
+        lang: 'javascript',
+        code: [
+          "function bindClick() {",
+          "  const btn = document.getElementById('btn');",
+          "  btn.addEventListener('click', () => {",
+          "    this.classList.add('active');",
+          "  });",
+          "}"
+        ],
+        bugLine: 3,
+        reason: "Arrow functions do not bind their own 'this' context."
+      },
+
+      // --- PYTHON (10) ---
+      {
+        lang: 'python',
+        code: [
+          "def add_item(item, target=[]):",
+          "    target.append(item)",
+          "    return target"
+        ],
+        bugLine: 0,
+        reason: "Mutable default argument persists state across function calls."
+      },
+      {
+        lang: 'python',
+        code: [
+          "numbers = [1, 2, 3, 4, 5]",
+          "for i in range(len(numbers)):",
+          "    if numbers[i] % 2 == 0:",
+          "        numbers.remove(numbers[i])"
+        ],
+        bugLine: 3,
+        reason: "Modifying a list while iterating over its index causes skip/IndexError."
+      },
+      {
+        lang: 'python',
+        code: [
+          "title = 'hello world'",
+          "title[0] = 'H'",
+          "print(title)"
+        ],
+        bugLine: 1,
+        reason: "Strings are immutable in Python and cannot be assigned by index."
+      },
+      {
+        lang: 'python',
+        code: [
+          "def get_average(scores):",
+          "    total = sum(scores)",
+          "    return total / len(scores)",
+          "print(get_average([]))"
+        ],
+        bugLine: 2,
+        reason: "Passing an empty list triggers ZeroDivisionError."
+      },
+      {
+        lang: 'python',
+        code: [
+          "functions = []",
+          "for i in range(3):",
+          "    functions.append(lambda: i)",
+          "print([f() for f in functions])"
+        ],
+        bugLine: 2,
+        reason: "Late binding closure captures reference to variable i, returning [2, 2, 2]."
+      },
+      {
+        lang: 'python',
+        code: [
+          "user_data = {'name': 'Alex'}",
+          "if user_data.has_key('name'):",
+          "    print('Exists')"
+        ],
+        bugLine: 1,
+        reason: "has_key() was removed in Python 3; use 'in' operator instead."
+      },
+      {
+        lang: 'python',
+        code: [
+          "list_a = [1, 2, 3]",
+          "list_b = list_a",
+          "list_b.append(4)",
+          "assert len(list_a) == 3"
+        ],
+        bugLine: 3,
+        reason: "list_b is a reference to list_a, so mutating list_b changes list_a."
+      },
+      {
+        lang: 'python',
+        code: [
+          "class User:",
+          "    def __init__(name):",
+          "        self.name = name"
+        ],
+        bugLine: 1,
+        reason: "Missing 'self' parameter in class instance method definition."
+      },
+      {
+        lang: 'python',
+        code: [
+          "coords = (10, 20)",
+          "coords.append(30)",
+          "print(coords)"
+        ],
+        bugLine: 1,
+        reason: "Tuples are immutable and do not have an append method."
+      },
+      {
+        lang: 'python',
+        code: [
+          "try:",
+          "    value = 10 / 0",
+          "except Exception:",
+          "    pass",
+          "print(value)"
+        ],
+        bugLine: 4,
+        reason: "Variable 'value' is uninitialized due to exception in try block."
+      },
+
+      // --- PHP (10) ---
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$globalCount = 10;",
+          "function printCount() {",
+          "  echo $globalCount;",
+          "}",
+          "printCount();"
+        ],
+        bugLine: 3,
+        reason: "Global variable accessed inside function without 'global' keyword."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$user = ['name' => 'John'];",
+          "if ($user['role'] == 'admin') {",
+          "  echo 'Access granted';",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "Undefined array key 'role' causes warning/error."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$items = [1, 2, 3];",
+          "foreach ($items as &$item) {}",
+          "foreach ($items as$item) {}",
+          "print_r($items);"
+        ],
+        bugLine: 3,
+        reason: "Reusing reference variable $item in second loop mutates last element."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$data = null;",
+          "if (count($data) > 0) {",
+          "  echo 'Has elements';",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "Calling count() on null throws a TypeError in modern PHP."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$text = 'Hello World';",
+          "if (strpos($text, 'Hello') == false) {",
+          "  echo 'Not found';",
+          "}"
+        ],
+        bugLine: 2,
+        reason: "strpos returns 0 for index 0, which loosely equals false (=== required)."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$qty = '10 items';",
+          "$total =$qty + 5;",
+          "echo $total;"
+        ],
+        bugLine: 2,
+        reason: "Performing arithmetic on non-numeric string throws TypeError/Warning."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "class Client {",
+          "  private function connect() {}",
+          "}",
+          "$c = new Client();",
+          "$c->connect();"
+        ],
+        bugLine: 5,
+        reason: "Cannot invoke private method connect() outside class context."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$handle = fopen('file.txt', 'r');",
+          "fclose('file.txt');"
+        ],
+        bugLine: 2,
+        reason: "fclose expects a file resource handle, not a string filename."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "define('LIMIT', 50);",
+          "LIMIT = 100;"
+        ],
+        bugLine: 2,
+        reason: "Cannot reassign constant defined via define()."
+      },
+      {
+        lang: 'php',
+        code: [
+          "<?php",
+          "$list = [10, 20, 30];",
+          "echo $list;"
+        ],
+        bugLine: 2,
+        reason: "Directly echoing an array triggers Array to string conversion error."
+      },
+
+      // --- SQL (10) ---
+      {
+        lang: 'sql',
+        code: [
+          "SELECT user_id, COUNT(*)",
+          "FROM orders",
+          "WHERE COUNT(*) > 5",
+          "GROUP BY user_id;"
+        ],
+        bugLine: 2,
+        reason: "Aggregate functions like COUNT(*) must be used in HAVING, not WHERE."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "SELECT id, username",
+          "FROM users",
+          "WHERE email = NULL;"
+        ],
+        bugLine: 2,
+        reason: "NULL comparisons require IS NULL rather than equality operator (=)."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "SELECT category, price",
+          "FROM products",
+          "GROUP BY category;"
+        ],
+        bugLine: 0,
+        reason: "Unaggregated column 'price' selected without being included in GROUP BY."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "INSERT INTO logs (id, message)",
+          "VALUES (10, 'Login')",
+          "WHERE id NOT IN (SELECT id FROM logs);"
+        ],
+        bugLine: 2,
+        reason: "WHERE clause is invalid in direct INSERT INTO ... VALUES syntax."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "SELECT * FROM users",
+          "WHERE status NOT IN ('active', 'pending', NULL);"
+        ],
+        bugLine: 1,
+        reason: "NOT IN returns 0 rows if set contains NULL due to 3-valued logic."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "UPDATE accounts",
+          "SET balance = balance - 50;",
+          "WHERE account_id = 100;"
+        ],
+        bugLine: 1,
+        reason: "Premature semicolon after SET clause truncates query before WHERE."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "SELECT name FROM employees",
+          "ORDER BY salary DESC",
+          "WHERE status = 'ACTIVE';"
+        ],
+        bugLine: 1,
+        reason: "ORDER BY must appear after WHERE clause in SQL syntax."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "DELETE FROM orders",
+          "INNER JOIN users ON orders.user_id = users.id;"
+        ],
+        bugLine: 0,
+        reason: "Delete target table alias missing before FROM in JOIN deletion."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "SELECT title FROM posts",
+          "LIMIT 10",
+          "WHERE published = 1;"
+        ],
+        bugLine: 1,
+        reason: "LIMIT clause must be placed at the end of the query."
+      },
+      {
+        lang: 'sql',
+        code: [
+          "SELECT DISTINCT category, COUNT(*)",
+          "FROM inventory;"
+        ],
+        bugLine: 0,
+        reason: "DISTINCT cannot be combined with un-grouped COUNT(*) without GROUP BY."
       }
     ];
 
+    let filteredBugChallenges = [...bugChallenges];
     let currentBugIndex = 0;
     let bugStreak = 0;
 
+    function updateBugLanguagePreference() {
+      const selectEl = document.getElementById('bug-lang-select');
+      const bugBox = document.getElementById('box-bug');
+      const val = selectEl ? selectEl.value : 'all';
+
+      if (val === 'off') {
+        if (bugBox) bugBox.style.display = 'none';
+        return;
+      }
+
+      if (bugBox) bugBox.style.display = 'block';
+
+      if (val === 'all') {
+        filteredBugChallenges = [...bugChallenges];
+      } else {
+        filteredBugChallenges = bugChallenges.filter(item => item.lang === val);
+      }
+
+      currentBugIndex = 0;
+      loadBugChallenge();
+    }
+
     function loadBugChallenge() {
-      const challenge = bugChallenges[currentBugIndex];
+      const bugBox = document.getElementById('box-bug');
+      if (bugBox && bugBox.style.display === 'none') return;
+
+      if (filteredBugChallenges.length === 0) return;
+
+      const challenge = filteredBugChallenges[currentBugIndex];
       const blockEl = document.getElementById('bug-code-block');
       if (!blockEl) return;
+
       blockEl.innerHTML = challenge.code.map((line, idx) => `
         <div class="code-line" onclick="checkBugLine(${idx})">${idx + 1}. ${line}</div>
       `).join('');
       document.getElementById('bug-feedback').textContent = "Click on the line containing the bug";
+      document.getElementById('bug-feedback').style.color = "var(--muted)";
     }
 
     function checkBugLine(idx) {
-      const challenge = bugChallenges[currentBugIndex];
+      if (filteredBugChallenges.length === 0) return;
+
+      const challenge = filteredBugChallenges[currentBugIndex];
       const feedback = document.getElementById('bug-feedback');
       if (idx === challenge.bugLine) {
         bugStreak++;
@@ -337,13 +795,13 @@
         feedback.style.color = "var(--correct)";
         document.getElementById('bug-streak').textContent = bugStreak;
         setTimeout(() => {
-          currentBugIndex = (currentBugIndex + 1) % bugChallenges.length;
+          currentBugIndex = (currentBugIndex + 1) % filteredBugChallenges.length;
           loadBugChallenge();
         }, 1500);
       } else {
         bugStreak = 0;
         document.getElementById('bug-streak').textContent = 0;
-        feedback.textContent = "Wrong line! Look closely for syntax/async issues.";
+        feedback.textContent = "Wrong line! Look closely for syntax, logic, or type issues.";
         feedback.style.color = "var(--incorrect)";
       }
     }
