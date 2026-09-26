@@ -2,7 +2,7 @@
       {
         file: 'living-a-life.md',
         title: 'Why Live a Life?',
-        desc: 'A quick reflection on iteration, curiosity, and purpose',
+        desc: 'A quick reflection on purpose',
         date: '25th Sep 2026',
         tag: 'tech'
       },
