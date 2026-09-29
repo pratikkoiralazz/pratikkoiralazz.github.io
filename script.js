@@ -7,6 +7,13 @@
         tag: 'tech'
       },
       {
+        file: 'rust-sikdai-withrajansir.md',
+        title: 'rust sikdai with rajansir',
+        desc: 'offer us rust project',
+        date: '29th Sep 2026',
+        tag: 'all'
+      }
+      {
         file: 'civic-tech-impact.md',
         title: 'Building Civic Tech for Local Impact',
         desc: 'Lessons from RateMyPalika & Report2Clean',
