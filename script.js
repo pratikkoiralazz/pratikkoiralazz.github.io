@@ -11,7 +11,7 @@
         title: 'rust sikdai with rajansir',
         desc: 'offer us rust project',
         date: '29th Sep 2026',
-        tag: 'all'
+        tag: 'tech'
       }
       {
         file: 'civic-tech-impact.md',
