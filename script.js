@@ -12,7 +12,7 @@
         desc: 'offer us rust project',
         date: '29th Sep 2026',
         tag: 'tech'
-      }
+      },
       {
         file: 'civic-tech-impact.md',
         title: 'Building Civic Tech for Local Impact',
