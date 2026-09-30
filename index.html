@@ -4,181 +4,206 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pratik Koirala</title>
-<link rel="icon" type="image/jfif" href="logo1.jfif">
+  <link rel="icon" type="image/jfif" href="logo1.jfif">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
- 
-    
-<link rel="stylesheet" href="style.css">
-
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <canvas id="matrix-canvas"></canvas>
 
-  <!-- Top Navigation Bar -->
-  <nav>
-    <div class="nav-links">
-      <span class="nav-link active" id="nav-home" onclick="showPage('home')">Home</span>
-      <span class="nav-link" id="nav-posts" onclick="showPage('posts')">Posts</span>
-      <span class="nav-link" id="nav-posts"  onclick="openPalette()">Menu</span>
-    </div>
-    <button class="btn-action" onclick="cycleTheme()">🎨 Theme [T]</button>
-  </nav>
+  <!-- Website Outer Layout Container -->
+  <div class="site-wrapper">
 
-  <!-- HOME PAGE VIEW -->
-  <main id="page-home" class="active">
-    <header>
-      <h1>Pratik Koirala</h1>
-      <p class="bio">Building full-stack web applications, civic tech tools, and AI workflows.</p>
-
-      <div class="top-bar">
-        <div class="status-badge">
-          <span class="status-dot"></span> Available for selective projects
-        </div>
-        <button class="btn-action" onclick="toggleDrawer()">⚙️ Status</button>
-        
-      </div>
-
-      <!-- System Drawer -->
-      <div id="system-drawer" class="drawer">
-        <div class="drawer-row"><span>Stack:</span><span>PHP · MERN · PERN</span></div>
-        <div class="drawer-row"><span>Editor:</span><span>VS Code</span></div>
-        <div class="drawer-row"><span>Location:</span><span>Biratnagar, Nepal</span></div>
-        <div class="drawer-row"><span>Secret:</span><span>Try typing Konami Code ↑↑↓↓←→←→BA</span></div>
-        <div class="drawer-row drawer-exit">
-          <span></span>
-          <a class="drawer-exit-btn" onclick="closeDrawer(event)">✕ Exit</a>
+    <!-- Sidebar Component -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="logo1.jfif" alt="Logo" class="sidebar-logo">
+        <div class="brand-text">
+          <h2>Pratik Koirala</h2>
+          <span class="role-badge">Full-Stack & AI</span>
         </div>
       </div>
 
-      <!-- Terminal Snake Game -->
-      <div id="box-snake" class="game-box">
-        <div class="game-header">
-          <span>Debug Bugs: 🐛</span>
-          <span>Score: <strong id="snake-score" style="color:var(--accent);">0</strong> | High: <strong id="snake-high" style="color:var(--correct);">0</strong></span>
+      <nav class="sidebar-nav">
+        <span class="nav-link active" id="nav-home" onclick="showPage('home')">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Home
+        </span>
+        <span class="nav-link" id="nav-posts" onclick="showPage('posts')">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          Posts
+        </span>
+        <span class="nav-link" onclick="openPalette()">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          Menu <kbd class="cmd-kbd">⌘K</kbd>
+        </span>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn-action theme-btn" onclick="cycleTheme()">🎨 Theme [T]</button>
+        <div class="status-badge sidebar-status">
+          <span class="status-dot"></span> Open for projects
         </div>
-        <canvas id="snake-board" width="300" height="200"></canvas>
       </div>
+    </aside>
 
-      <!-- Code Bug Hunter -->
-     <div id="box-bug" class="game-box">
-  <div class="game-header">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span>Find the bug line</span>
-      <select id="bug-lang-select" onchange="updateBugLanguagePreference()" style="background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; font-family: inherit; cursor: pointer;">
-        <option value="all">All Languages</option>
-        <option value="javascript">JavaScript</option>
-        <option value="python">Python</option>
-        <option value="php">PHP</option>
-        <option value="sql">SQL</option>
-        <option value="off">Turn Off Game</option>
-      </select>
-    </div>
-    <span>Streak: <strong id="bug-streak" style="color:var(--correct);">0</strong></span>
-  </div>
-  <div id="bug-code-block" class="code-block"></div>
-  <div id="bug-feedback" class="game-feedback">Click on the buggy line</div>
-</div>
+    <!-- Main Workspace Content -->
+    <div class="main-content">
 
-      <!-- Monkeytype Mode Engine -->
-      <div id="box-typing" class="game-box" onclick="focusEngine()">
-        <div class="game-header" style="margin-bottom: 12px;">
-          <span>⚡ Typing Speed Test</span>
-          <button class="game-exit-btn" onclick="closeWidget('box-typing'); event.stopPropagation();">✕ Exit</button>
-        </div>
+      <!-- HOME PAGE VIEW -->
+      <main id="page-home" class="active">
+        <header>
+          <h1>Pratik Koirala</h1>
+          <p class="bio">Building full-stack web applications, civic tech tools, and AI workflows.</p>
 
-        <div id="config-bar" class="typing-config">
-          <div class="config-group">
-            <span class="config-opt active" onclick="setTypingMode(15, this)">15s</span>
-            <span class="config-opt" onclick="setTypingMode(30, this)">30s</span>
-            <span class="config-opt" onclick="setTypingMode(60, this)">60s</span>
+          <div class="top-bar">
+            <button class="btn-action" onclick="toggleDrawer()">⚙️ Status & Details</button>
           </div>
-          <div id="timer-val" class="timer-display">15</div>
+
+          <!-- System Drawer -->
+          <div id="system-drawer" class="drawer">
+            <div class="drawer-row"><span>Stack:</span><span>PHP · MERN · PERN</span></div>
+            <div class="drawer-row"><span>Editor:</span><span>VS Code</span></div>
+            <div class="drawer-row"><span>Location:</span><span>Biratnagar, Nepal</span></div>
+            <div class="drawer-row"><span>Secret:</span><span>Try typing Konami Code ↑↑↓↓←→←→BA</span></div>
+            <div class="drawer-row drawer-exit">
+              <span></span>
+              <a class="drawer-exit-btn" onclick="closeDrawer(event)">✕ Exit</a>
+            </div>
+          </div>
+
+          <!-- Terminal Snake Game -->
+          <div id="box-snake" class="game-box">
+            <div class="game-header">
+              <span>Debug Bugs: 🐛</span>
+              <span>Score: <strong id="snake-score" style="color:var(--accent);">0</strong> | High: <strong id="snake-high" style="color:var(--correct);">0</strong></span>
+            </div>
+            <canvas id="snake-board" width="300" height="200"></canvas>
+          </div>
+
+          <!-- Code Bug Hunter -->
+          <div id="box-bug" class="game-box">
+            <div class="game-header">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span>Find the bug line</span>
+                <select id="bug-lang-select" onchange="updateBugLanguagePreference()" style="background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; font-family: inherit; cursor: pointer;">
+                  <option value="all">All Languages</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="python">Python</option>
+                  <option value="php">PHP</option>
+                  <option value="sql">SQL</option>
+                  <option value="off">Turn Off Game</option>
+                </select>
+              </div>
+              <span>Streak: <strong id="bug-streak" style="color:var(--correct);">0</strong></span>
+            </div>
+            <div id="bug-code-block" class="code-block"></div>
+            <div id="bug-feedback" class="game-feedback">Click on the buggy line</div>
+          </div>
+
+          <!-- Monkeytype Mode Engine -->
+          <div id="box-typing" class="game-box" onclick="focusEngine()">
+            <div class="game-header" style="margin-bottom: 12px;">
+              <span>⚡ Typing Speed Test</span>
+              <button class="game-exit-btn" onclick="closeWidget('box-typing'); event.stopPropagation();">✕ Exit</button>
+            </div>
+
+            <div id="config-bar" class="typing-config">
+              <div class="config-group">
+                <span class="config-opt active" onclick="setTypingMode(15, this)">15s</span>
+                <span class="config-opt" onclick="setTypingMode(30, this)">30s</span>
+                <span class="config-opt" onclick="setTypingMode(60, this)">60s</span>
+              </div>
+              <div id="timer-val" class="timer-display">15</div>
+            </div>
+
+            <input type="text" id="engine-input" class="typing-hidden-input" autocomplete="off" oninput="handleEngineInput(event)">
+            
+            <div id="words-container" class="typing-words-wrapper">
+              <div id="caret" class="caret"></div>
+              <div id="words-inner"></div>
+            </div>
+
+            <div id="results-card" class="results-card">
+              <div class="stat-block"><span class="lbl">wpm</span><span id="res-wpm" class="val">0</span></div>
+              <div class="stat-block"><span class="lbl">acc</span><span id="res-acc" class="val">0%</span></div>
+              <div class="stat-block"><span class="lbl">test type</span><div id="res-type" class="res-type-text">time 15<br>english</div></div>
+            </div>
+
+            <button class="restart-btn" onclick="resetEngine(); event.stopPropagation();">↻ Restart Test</button>
+          </div>
+        </header>
+
+        <!-- Filterable Projects Section -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">SELECTED FOCUS</div>
+            <div class="tag-filters">
+              <button class="tag-btn active" onclick="filterProjects('all', this)">All</button>
+              <button class="tag-btn" onclick="filterProjects('civic', this)">Civic</button>
+              <button class="tag-btn" onclick="filterProjects('web', this)">Web</button>
+              <button class="tag-btn" onclick="filterProjects('ai', this)">AI</button>
+            </div>
+          </div>
+          <div class="project-list">
+            <div class="project-item" data-tag="civic">
+              <a href="https://github.com/pratikkoiralazz" target="_blank">Civic Platforms</a>
+              <span class="project-desc">Transparency & reporting systems</span>
+            </div>
+            <div class="project-item" data-tag="web">
+              <a href="https://github.com/pratikkoiralazz" target="_blank">Web Engineering</a>
+              <span class="project-desc">PHP · MERN · PERN</span>
+            </div>
+            <div class="project-item" data-tag="ai" style="display:none;">
+              <a href="https://github.com/pratikkoiralazz" target="_blank">AuraWork</a>
+              <span class="project-desc">AI health & posture companion</span>
+            </div>
+          </div>
         </div>
 
-        <input type="text" id="engine-input" class="typing-hidden-input" autocomplete="off" oninput="handleEngineInput(event)">
-        
-        <div id="words-container" class="typing-words-wrapper">
-          <div id="caret" class="caret"></div>
-          <div id="words-inner"></div>
+        <div class="section">
+          <div class="section-title">CONNECT</div>
+          <div class="links">
+            <a href="https://github.com/pratikkoiralazz" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/pratikkoiralazz/" target="_blank">LinkedIn</a>
+          </div>
         </div>
+      </main>
 
-        <div id="results-card" class="results-card">
-          <div class="stat-block"><span class="lbl">wpm</span><span id="res-wpm" class="val">0</span></div>
-          <div class="stat-block"><span class="lbl">acc</span><span id="res-acc" class="val">0%</span></div>
-          <div class="stat-block"><span class="lbl">test type</span><div id="res-type" class="res-type-text">time 15<br>english</div></div>
+      <!-- POSTS LIST PAGE VIEW -->
+      <main id="page-posts">
+        <div class="section" style="margin-top:0;">
+          <div class="section-header">
+            <div class="section-title">THOUGHTS & WRITING</div>
+            <div class="tag-filters">
+              <button class="tag-btn active" onclick="filterArticles('all', this)">All</button>
+              <button class="tag-btn" onclick="filterArticles('tech', this)">Tech</button>
+              <button class="tag-btn" onclick="filterArticles('civic', this)">Civic</button>
+            </div>
+          </div>
+          <!-- Dynamic posts list container -->
+          <div class="project-list" id="articles-list"></div>
         </div>
+      </main>
 
-        <button class="restart-btn" onclick="resetEngine(); event.stopPropagation();">↻ Restart Test</button>
-      </div>
-    </header>
-
-    <!-- Filterable Projects Section -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title">SELECTED FOCUS</div>
-        <div class="tag-filters">
-          <button class="tag-btn active" onclick="filterProjects('all', this)">All</button>
-          <button class="tag-btn" onclick="filterProjects('civic', this)">Civic</button>
-          <button class="tag-btn" onclick="filterProjects('web', this)">Web</button>
-          <button class="tag-btn" onclick="filterProjects('ai', this)">AI</button>
+      <!-- STANDALONE ARTICLE READER VIEW -->
+      <main id="page-article-reader">
+        <button class="btn-action" onclick="showPage('posts')" style="margin-bottom: 24px;">← Back to Posts</button>
+        <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;">
+          <h1 id="reader-title" style="font-size: 1.8rem; margin-bottom: 8px;"></h1>
+          <span id="reader-date" style="font-size: 0.85rem; color: var(--muted-dark); font-family: ui-monospace, monospace;"></span>
         </div>
-      </div>
-      <div class="project-list">
-        <div class="project-item" data-tag="civic">
-          <a href="https://github.com/pratikkoiralazz" target="_blank">Civic Platforms</a>
-          <span class="project-desc">Transparency & reporting systems</span>
-        </div>
-        <div class="project-item" data-tag="web">
-          <a href="https://github.com/pratikkoiralazz" target="_blank">Web Engineering</a>
-          <span class="project-desc">PHP · MERN · PERN</span>
-        </div>
-        <div class="project-item" data-tag="ai" style="display:none;">
-          <a href="https://github.com/pratikkoiralazz" target="_blank">AuraWork</a>
-          <span class="project-desc">AI health & posture companion</span>
-        </div>
-      </div>
-    </div>
+        <div id="reader-body" style="color: var(--text); font-size: 1.05rem; line-height: 1.8;"></div>
+      </main>
 
-    <div class="section">
-      <div class="section-title">CONNECT</div>
-      <div class="links">
-        <a href="https://github.com/pratikkoiralazz" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/pratikkoiralazz/" target="_blank">LinkedIn</a>
-      </div>
-    </div>
-  </main>
+      <footer>
+        <div id="live-time">Loading local time...</div>
+        <div>Today's GitHub commits: <span id="commit-count" style="color:var(--text); font-weight:600;">0</span></div>
+      </footer>
 
-  <!-- POSTS LIST PAGE VIEW -->
-  <main id="page-posts">
-    <div class="section" style="margin-top:0;">
-      <div class="section-header">
-        <div class="section-title">THOUGHTS & WRITING</div>
-        <div class="tag-filters">
-          <button class="tag-btn active" onclick="filterArticles('all', this)">All</button>
-          <button class="tag-btn" onclick="filterArticles('tech', this)">Tech</button>
-          <button class="tag-btn" onclick="filterArticles('civic', this)">Civic</button>
-        </div>
-      </div>
-      <!-- Dynamic posts list container -->
-      <div class="project-list" id="articles-list"></div>
-    </div>
-  </main>
-
-  <!-- STANDALONE ARTICLE READER VIEW -->
-  <main id="page-article-reader">
-    <button class="btn-action" onclick="showPage('posts')" style="margin-bottom: 24px;">← Back to Posts</button>
-    <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;">
-      <h1 id="reader-title" style="font-size: 1.8rem; margin-bottom: 8px;"></h1>
-      <span id="reader-date" style="font-size: 0.85rem; color: var(--muted-dark); font-family: ui-monospace, monospace;"></span>
-    </div>
-    <div id="reader-body" style="color: var(--text); font-size: 1.05rem; line-height: 1.8;"></div>
-  </main>
-
-  <footer>
-    <div id="live-time">Loading local time...</div>
-    <div>Today's GitHub commits: <span id="commit-count" style="color:var(--text); font-weight:600;">0</span></div>
-  </footer>
+    </div><!-- /.main-content -->
+  </div><!-- /.site-wrapper -->
 
   <!-- Command Palette Modal -->
   <div id="palette-modal" class="modal-overlay" onclick="closePalette(event)">
@@ -198,8 +223,7 @@
     </div>
   </div>
 
-
-   <script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
