@@ -65,13 +65,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* App Wrapper for Sidebar Layout */
 .site-wrapper {
   display: flex;
   min-height: 100vh;
 }
 
-/* Fixed Sidebar Navigation */
 .sidebar {
   width: 260px;
   background-color: var(--sidebar-bg);
@@ -169,12 +167,19 @@ body {
   justify-content: center;
 }
 
-/* Main Content Workspace */
 .main-content {
   margin-left: 260px;
   flex: 1;
   max-width: 720px;
   padding: 40px 48px;
+}
+
+main {
+  display: none;
+}
+
+main.active {
+  display: block !important;
 }
 
 header { margin-bottom: 32px; }
@@ -239,7 +244,6 @@ h1 {
   border-color: var(--accent);
 }
 
-/* System Drawer */
 .drawer {
   display: none;
   background: var(--badge-bg);
@@ -302,7 +306,6 @@ h1 {
 
 .game-exit-btn:hover { color: var(--incorrect); }
 
-/* Terminal Snake Game */
 #snake-board {
   background: #000;
   border: 1px solid var(--border);
@@ -311,7 +314,6 @@ h1 {
   border-radius: 6px;
 }
 
-/* Code Bug Hunter */
 .code-block {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -337,7 +339,6 @@ h1 {
   text-align: center;
 }
 
-/* Monkeytype Mode */
 .typing-config {
   display: flex;
   justify-content: space-between;
@@ -476,11 +477,6 @@ footer {
   gap: 6px;
 }
 
-/* Views */
-#page-home, #page-posts, #page-article-reader { display: none; }
-#page-home.active, #page-posts.active, #page-article-reader.active { display: block; }
-
-/* Command Palette Modal Overlay */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -544,7 +540,6 @@ footer {
   opacity: 0.85;
 }
 
-/* Responsive Layout for Mobile Displays */
 @media (max-width: 768px) {
   .site-wrapper {
     flex-direction: column;

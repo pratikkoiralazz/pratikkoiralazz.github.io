@@ -12,16 +12,14 @@
 
   <canvas id="matrix-canvas"></canvas>
 
-  <!-- Website Outer Layout Container -->
   <div class="site-wrapper">
 
-    <!-- Sidebar Component -->
     <aside class="sidebar">
       <div class="sidebar-brand">
         <img src="logo1.jfif" alt="Logo" class="sidebar-logo">
         <div class="brand-text">
           <h2>Pratik Koirala</h2>
-          <span class="role-badge">Full-Stack </span>
+          <span class="role-badge">Full-Stack & AI</span>
         </div>
       </div>
 
@@ -34,6 +32,7 @@
           <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
           Posts
         </span>
+    
         <span class="nav-link" onclick="openPalette()">
           <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
           Menu <kbd class="cmd-kbd">⌘K</kbd>
@@ -48,10 +47,8 @@
       </div>
     </aside>
 
-    <!-- Main Workspace Content -->
     <div class="main-content">
 
-      <!-- HOME PAGE VIEW -->
       <main id="page-home" class="active">
         <header>
           <h1>Pratik Koirala</h1>
@@ -61,7 +58,6 @@
             <button class="btn-action" onclick="toggleDrawer()">⚙️ Status & Details</button>
           </div>
 
-          <!-- System Drawer -->
           <div id="system-drawer" class="drawer">
             <div class="drawer-row"><span>Stack:</span><span>PHP · MERN · PERN</span></div>
             <div class="drawer-row"><span>Editor:</span><span>VS Code</span></div>
@@ -73,7 +69,6 @@
             </div>
           </div>
 
-          <!-- Terminal Snake Game -->
           <div id="box-snake" class="game-box">
             <div class="game-header">
               <span>Debug Bugs: 🐛</span>
@@ -82,7 +77,6 @@
             <canvas id="snake-board" width="300" height="200"></canvas>
           </div>
 
-          <!-- Code Bug Hunter -->
           <div id="box-bug" class="game-box">
             <div class="game-header">
               <div style="display: flex; align-items: center; gap: 8px;">
@@ -102,7 +96,6 @@
             <div id="bug-feedback" class="game-feedback">Click on the buggy line</div>
           </div>
 
-          <!-- Monkeytype Mode Engine -->
           <div id="box-typing" class="game-box" onclick="focusEngine()">
             <div class="game-header" style="margin-bottom: 12px;">
               <span>⚡ Typing Speed Test</span>
@@ -135,7 +128,6 @@
           </div>
         </header>
 
-        <!-- Filterable Projects Section -->
         <div class="section">
           <div class="section-header">
             <div class="section-title">SELECTED FOCUS</div>
@@ -171,7 +163,6 @@
         </div>
       </main>
 
-      <!-- POSTS LIST PAGE VIEW -->
       <main id="page-posts">
         <div class="section" style="margin-top:0;">
           <div class="section-header">
@@ -182,12 +173,13 @@
               <button class="tag-btn" onclick="filterArticles('civic', this)">Civic</button>
             </div>
           </div>
-          <!-- Dynamic posts list container -->
           <div class="project-list" id="articles-list"></div>
         </div>
       </main>
 
-      <!-- STANDALONE ARTICLE READER VIEW -->
+  
+
+
       <main id="page-article-reader">
         <button class="btn-action" onclick="showPage('posts')" style="margin-bottom: 24px;">← Back to Posts</button>
         <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;">
@@ -202,10 +194,9 @@
         <div>Today's GitHub commits: <span id="commit-count" style="color:var(--text); font-weight:600;">0</span></div>
       </footer>
 
-    </div><!-- /.main-content -->
-  </div><!-- /.site-wrapper -->
+    </div>
+  </div>
 
-  <!-- Command Palette Modal -->
   <div id="palette-modal" class="modal-overlay" onclick="closePalette(event)">
     <div class="modal" onclick="event.stopPropagation()">
       <input type="text" id="palette-search" class="modal-input" placeholder="Type a command or search..." oninput="searchPalette()">
@@ -223,6 +214,7 @@
     </div>
   </div>
 
+ 
   <script src="script.js"></script>
 
 </body>
