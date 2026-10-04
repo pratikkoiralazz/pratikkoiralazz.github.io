@@ -582,7 +582,8 @@ function execCmd(action) {
   if (action === 'linkedin') window.open('https://www.linkedin.com/in/pratikkoiralazz/', '_blank');
   if (action === 'theme') cycleTheme();
   if (action === 'drawer') toggleDrawer();
-  if (action === 'matrix') triggerMatrix();
+  if (action === 'matrix') triggerMatrix(); 
+  if (action === 'nepal-disaster-archive') window.open('https://pratik-koirala.com.np/', '_blank');
 }
 
 const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
