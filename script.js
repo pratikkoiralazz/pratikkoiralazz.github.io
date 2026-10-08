@@ -1,30 +1,34 @@
 const postsData = [
   {
-    file: 'living-a-life.md',
-    title: 'Why Live a Life?',
-    desc: 'A quick reflection on purpose',
-    date: '25th Sep 2026',
-    tag: 'tech'
-  },
- {
     file: 'a-convincing-mistake.md',
     title: 'A Convincing Mistake',
     desc: 'An Accident Called Life',
     date: '8th oct 2026',
     tag: 'civic'
   },
-  {
+ 
+   {
     file: 'rust-sikdai-withrajansir.md',
     title: 'rust sikdai with rajansir',
     desc: 'offer us rust project',
     date: '29th Sep 2026',
     tag: 'tech'
   },
+
+  {
+    file: 'living-a-life.md',
+    title: 'Why Live a Life?',
+    desc: 'A quick reflection on purpose',
+    date: '26th Sep 2026',
+    tag: 'tech'
+  },
+
+ 
   {
     file: 'civic-tech-impact.md',
     title: 'Building Civic Tech for Local Impact',
     desc: 'Lessons from RateMyPalika & Report2Clean',
-    date: '26th Sep 2026',
+    date: '25th Sep 2026',
     tag: 'civic'
   }
 ];
