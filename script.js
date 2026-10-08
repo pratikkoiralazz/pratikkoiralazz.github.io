@@ -6,6 +6,13 @@ const postsData = [
     date: '25th Sep 2026',
     tag: 'tech'
   },
+ {
+    file: 'a-convincing-mistake.md',
+    title: 'A Convincing Mistake',
+    desc: 'An Accident Called Life',
+    date: '8th oct 2026',
+    tag: 'civic'
+  },
   {
     file: 'rust-sikdai-withrajansir.md',
     title: 'rust sikdai with rajansir',
