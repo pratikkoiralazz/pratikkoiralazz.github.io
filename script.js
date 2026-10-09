@@ -1,7 +1,7 @@
 const postsData = [
   {
     file: 'a-convincing-mistake.md',
-    title: 'A Convincing Mistake',
+    title: 'The Universe Has No Documentation',
     desc: 'An Accident Called Life',
     date: '8th oct 2026',
     tag: 'civic'
